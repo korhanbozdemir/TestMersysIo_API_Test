@@ -1,0 +1,3601 @@
+{
+	"info": {
+		"_postman_id": "90e9662f-b9ba-4113-ae66-74654f0f1ce4",
+		"name": "TestMersysİo (test.mersy.io)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30574358"
+	},
+	"item": [
+		{
+			"name": "+Setup",
+			"item": [
+				{
+					"name": "Parameters",
+					"item": [
+						{
+							"name": "Country",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "f92983fb23340feebdd78f052c074e483ce5d44daae6f1052591dfe1f3d9beb8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"turkeyts\",\r\n  \"password\": \"TechnoStudy123\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Country",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var gelenData=pm.response.json();\r",
+													"pm.collectionVariables.set(\"countryName\",gelenData.name);\r",
+													"pm.collectionVariables.set(\"countryID\",gelenData.id);\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "\r\n{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomCountry}} - {{$randomInt}}\",\r\n  \"code\": \"{{$randomCountryCode}}\",\r\n  \"translateName\": [],\r\n  \"hasState\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/countries",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"countries"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Country Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "\r\n{\r\n  \"id\": null,\r\n  \"name\": \"{{countryName}}\",\r\n  \"code\": \"{{$randomCountryCode}}\",\r\n  \"translateName\": [],\r\n  \"hasState\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/countries",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"countries"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Country",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "\r\n{\r\n  \"id\": \"{{countryID}}\",\r\n  \"name\": \"Updated Country - Güncellenen Ülke {{$randomInt}}\",\r\n  \"code\": \"{{$randomCountryCode}}\",\r\n  \"translateName\": [],\r\n  \"hasState\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/countries",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"countries"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Country",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/countries/{{countryID}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"countries",
+												"{{countryID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Country Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/countries/{{countryID}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"countries",
+												"{{countryID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "New Request",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/countries",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"countries"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Bank Accounts",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"turkeyts\",\r\n  \"password\": \"TechnoStudy123\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create BankAccount",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var Data=pm.response.json();\r",
+													"\r",
+													"pm.collectionVariables.set(\"idCode\",Data.id);\r",
+													"pm.collectionVariables.set(\"userName\",Data.Name);\r",
+													"\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": null,\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"iban\": \"{{$randomBankAccountIban}}\",\r\n    \"integrationCode\": null,\r\n    \"currency\": \"EUR\",\r\n    \"active\": true,\r\n    \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/bank-accounts",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"bank-accounts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update BankAccount",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": \"{{idCode}}\",\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"iban\": \"{{$randomBankAccountIban}}\",\r\n    \"currency\": \"EUR\",\r\n    \"active\": true,\r\n    \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/bank-accounts",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"bank-accounts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete BankAccount",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/bank-accounts/{{idCode}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"bank-accounts",
+												"{{idCode}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Grade Levels",
+							"item": [
+								{
+									"name": "Add,Edit or a new grade level Button",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "[\r\n  {\r\n    \"id\": \"6543de7f2849c34e335b4b16\",\r\n    \"name\": \"eeee\",\r\n    \"order\": 1,\r\n    \"shortName\": \"sss\",\r\n    \"nextGradeLevel\": null,\r\n    \"active\": true,\r\n    \"translateName\": [],\r\n    \"translateShortName\": [],\r\n    \"tenantId\": \"646cb816433c0f46e7d44cb0\",\r\n    \"schoolIds\": [\r\n      \"646cbb07acf2ee0d37c6d984\"\r\n    ],\r\n    \"showToAllSchools\": false,\r\n    \"maxApplicationCount\": 0\r\n  },\r\n  {\r\n    \"id\": \"64c7fd4dc4f4db5f52789c66\",\r\n    \"name\": \"Edaaaaaaağğğğğ\",\r\n    \"order\": 5,\r\n    \"shortName\": \"123\",\r\n    \"nextGradeLevel\": null,\r\n    \"active\": true,\r\n    \"translateName\": [],\r\n    \"translateShortName\": [],\r\n    \"tenantId\": \"646cb816433c0f46e7d44cb0\",\r\n    \"schoolIds\": [\r\n      \"646cbb07acf2ee0d37c6d984\",\r\n      \"646cbb07acf2ee0d37c6d984\",\r\n      \"646cbb07acf2ee0d37c6d984\",\r\n      \"646cbb07acf2ee0d37c6d984\",\r\n      \"646cbb07acf2ee0d37c6d984\",\r\n      \"646cbb07acf2ee0d37c6d984\",\r\n      \"646cbb07acf2ee0d37c6d984\",\r\n      \"646cbb07acf2ee0d37c6d984\",\r\n      \"646cbb07acf2ee0d37c6d984\",\r\n      \"646cbb07acf2ee0d37c6d984\"\r\n    ],\r\n    \"showToAllSchools\": false,\r\n    \"maxApplicationCount\": 1\r\n  },\r\n  {\r\n    \"id\": \"646cca8aacf2ee0d37c6d998\",\r\n    \"name\": \"et-omnis-ab\",\r\n    \"order\": 10,\r\n    \"shortName\": \"est-quam-sed\",\r\n    \"nextGradeLevel\": null,\r\n    \"active\": true,\r\n    \"translateName\": [],\r\n    \"translateShortName\": [],\r\n    \"tenantId\": \"646cb816433c0f46e7d44cb0\",\r\n    \"schoolIds\": null,\r\n    \"showToAllSchools\": false,\r\n    \"maxApplicationCount\": null\r\n  },\r\n  {\r\n    \"id\": \"6543215f02fe030268058567\",\r\n    \"name\": \"korhanyeni\",\r\n    \"order\": 321,\r\n    \"shortName\": \"kyeni\",\r\n    \"nextGradeLevel\": null,\r\n    \"active\": true,\r\n    \"translateName\": [],\r\n    \"translateShortName\": [],\r\n    \"tenantId\": \"646cb816433c0f46e7d44cb0\",\r\n    \"schoolIds\": [\r\n      \"646cbb07acf2ee0d37c6d984\",\r\n      \"646cbb07acf2ee0d37c6d984\"\r\n    ],\r\n    \"showToAllSchools\": false,\r\n    \"maxApplicationCount\": 32\r\n  }\r\n]",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/grade-levels/active",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"grade-levels",
+												"active"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Adds a new grade level",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var gelenData=pm.response.json();\r",
+													"pm.collectionVariables.set(\"grl_id\",gelenData.id)\r",
+													"pm.collectionVariables.set(\"grl_name\",gelenData.name)\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"shortName\": \"{{$randomWord}}\",\r\n  \"nextGradeLevel\": null,\r\n  \"order\": \"{{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"translateShortName\": [],\r\n  \"maxApplicationCount\": 0,\r\n  \"active\": true,\r\n  \"schoolIds\": [\r\n    \"646cbb07acf2ee0d37c6d984\"\r\n  ],\r\n  \"showToAllSchools\": false,\r\n  \"enableForSelectedSchools\": true\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/grade-levels",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"grade-levels"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edits a grade level",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{grl_id}}\",\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"shortName\": \"{{$randomWord}}\",\r\n  \"nextGradeLevel\": null,\r\n  \"order\": \"{{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"translateShortName\": [],\r\n  \"maxApplicationCount\": 1,\r\n  \"active\": true,\r\n  \"schoolIds\": [\r\n    \"646cbb07acf2ee0d37c6d984\",\r\n    \"646cbb07acf2ee0d37c6d984\",\r\n    \"646cbb07acf2ee0d37c6d984\"\r\n  ],\r\n  \"showToAllSchools\": false,\r\n  \"enableForSelectedSchools\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/grade-levels/",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"grade-levels",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Deletes a grade level",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/grade-levels/{{grl_id}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"grade-levels",
+												"{{grl_id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Deletes a grade level NEGATİVE",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"type\": \"https://support.mersys.io/cloud/problem/problem-with-message\",\r\n  \"status\": 400,\r\n  \"path\": \"/api/grade-levels/646cca8aacf2ee0d37c6d998\",\r\n  \"code\": null,\r\n  \"message\": \"Bu sınıf seviyesini silemezsiniz. Bu sınıf seviyesinde ders var.\",\r\n  \"lang\": null,\r\n  \"uri\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/grade-levels/646cca8aacf2ee0d37c6d998",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"grade-levels",
+												"646cca8aacf2ee0d37c6d998"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ActiveButtonControl",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"headers\": {\r\n    \"normalizedNames\": {},\r\n    \"lazyUpdate\": null\r\n  }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/grade-levels/6543d1ce2849c34e335b49f9/active/false",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"grade-levels",
+												"6543d1ce2849c34e335b49f9",
+												"active",
+												"false"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Navigates to GradeLevel",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/grade-levels/school/646cbb07acf2ee0d37c6d984",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"grade-levels",
+												"school",
+												"646cbb07acf2ee0d37c6d984"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Document Types",
+							"item": [
+								{
+									"name": "campus login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Navigates to DocumentsType",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "f92983fb23340feebdd78f052c074e483ce5d44daae6f1052591dfe1f3d9beb8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/attachments/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"attachments",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Adds a new DocumentsType",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var gelenData = pm.response.json();\r",
+													"\r",
+													"pm.collectionVariables.set(\"dt_id\",gelenData.id); \r",
+													"pm.collectionVariables.set(\"dt_name\",gelenData.name);\r",
+													"pm.collectionVariables.set(\"dt_schoolid\",gelenData.schoolId)\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "f92983fb23340feebdd78f052c074e483ce5d44daae6f1052591dfe1f3d9beb8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"description\": \"{{$randomJobTitle}}\",\r\n  \"attachmentStages\": [\r\n    \"STUDENT_REGISTRATION\"\r\n  ],\r\n  \"active\": true,\r\n  \"required\": true,\r\n  \"useCamera\": false,\r\n  \"translateName\": [],\r\n  \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/attachments/create",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"attachments",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Searches for a DocumentsType",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "f92983fb23340feebdd78f052c074e483ce5d44daae6f1052591dfe1f3d9beb8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"{{dt_name}}\",\r\n  \"schoolId\": \"{{dt_schoolid}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/attachments/search/",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"attachments",
+												"search",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Updates an existing DocumentsType",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "f92983fb23340feebdd78f052c074e483ce5d44daae6f1052591dfe1f3d9beb8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{dt_id}}\",\r\n  \"name\": \"{{dt_name}}\",\r\n  \"description\": \"{{$randomLoremText}}\",\r\n  \"attachmentStages\": [\r\n    \"STUDENT_REGISTRATION\"\r\n  ],\r\n  \"active\": true,\r\n  \"required\": true,\r\n  \"useCamera\": false,\r\n  \"translateName\": [],\r\n  \"schoolId\": \"{{dt_schoolid}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/attachments",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"attachments"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Deletes a DocumentsType",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "f92983fb23340feebdd78f052c074e483ce5d44daae6f1052591dfe1f3d9beb8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/attachments/{{dt_id}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"attachments",
+												"{{dt_id}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Fields",
+							"item": [
+								{
+									"name": "Navigate to Field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "03f50612a2344361a2596426dd1689c3c70b21f9e3695773e74813f8a5346d8d",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/entity-field/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"entity-field",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add New Field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var gelenData=pm.response.json();\r",
+													"pm.collectionVariables.set(\"id\",gelenData.id)\r",
+													"pm.collectionVariables.set(\"name\",gelenData.name)\r",
+													"pm.collectionVariables.set(\"schoolid\",gelenData.schoolId)\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"translateName\": [],\r\n  \"code\": \"{{$randomInt}}\",\r\n  \"type\": \"STRING\",\r\n  \"children\": [],\r\n  \"systemField\": false,\r\n  \"systemFieldName\": null,\r\n  \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/entity-field",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"entity-field"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search Field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "03f50612a2344361a2596426dd1689c3c70b21f9e3695773e74813f8a5346d8d",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"schoolId\": \"{{schoolid}}\",\r\n  \"name\": \"{{name}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/entity-field/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"entity-field",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit Field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "03f50612a2344361a2596426dd1689c3c70b21f9e3695773e74813f8a5346d8d",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{id}}\",\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"translateName\": [],\r\n  \"code\": \"{{$randomCountryCode}}\",\r\n  \"type\": \"STRING\",\r\n  \"children\": [],\r\n  \"systemField\": false,\r\n  \"systemFieldName\": null,\r\n  \"schoolId\": \"{{school_id}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/entity-field",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"entity-field"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Field",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "03f50612a2344361a2596426dd1689c3c70b21f9e3695773e74813f8a5346d8d",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/entity-field/{{id}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"entity-field",
+												"{{id}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Discounts",
+							"item": [
+								{
+									"name": "campus login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "discount click",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/discounts/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"discounts",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "creat discount",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var gelenData=pm.response.json();\r",
+													"pm.collectionVariables.set(\"discount_id\",gelenData.id)\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"description\": \"{{$randomUserName}}\",\r\n  \"code\": \"{{$randomCountryCode}}\",\r\n  \"active\": true,\r\n  \"translateDescription\": [],\r\n  \"priority\": \"1234\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/discounts",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"discounts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit discount",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{discount_id}}\",\r\n  \"description\": \"{{$randomUserName}}\",\r\n  \"code\": \"{{$randomCountryCode}}\",\r\n  \"active\": true,\r\n  \"translateDescription\": [],\r\n  \"priority\": 619\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/discounts",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"discounts"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE discount",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/discounts/{{discount_id}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"discounts",
+												"{{discount_id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "logout campus",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "https://test.mersys.io/auth/logout",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"logout"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Nationalities",
+							"item": [
+								{
+									"name": "campus login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Navigate to Nationality",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "f92983fb23340feebdd78f052c074e483ce5d44daae6f1052591dfe1f3d9beb8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/nationality/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"nationality",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add New Nationality",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var gelenData=pm.response.json();\r",
+													"\r",
+													"    pm.collectionVariables.set(\"n_name\",gelenData.name);\r",
+													"    pm.collectionVariables.set(\"n_id\",gelenData.id)\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomCountry}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/nationality",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"nationality"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Search Nationality",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"{{n_name}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/nationality/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"nationality",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit Nationality",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{n_id}}\",\r\n  \"name\": \"{{$randomCountry}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/nationality",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"nationality"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Nationality",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/nationality/{{n_id}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"nationality",
+												"{{n_id}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "School Setup",
+					"item": [
+						{
+							"name": "Departments",
+							"item": [
+								{
+									"name": "Navigate to Departments",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/school/646cbb07acf2ee0d37c6d984/department",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"school",
+												"646cbb07acf2ee0d37c6d984",
+												"department"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Departments",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var gelenData=pm.response.json();\r",
+													"\r",
+													"pm.collectionVariables.set(\"dep_id\",gelenData.id);\r",
+													"pm.collectionVariables.set(\"dep_name\",gelenData.name);\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"code\": \"{{$randomInt}}\",\r\n  \"active\": true,\r\n  \"school\": \"646cbb07acf2ee0d37c6d984\",\r\n  \"sections\": [],\r\n  \"constants\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/department",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"department"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit Departments",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{dep_id}}\",\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"code\": \"{{$randomInt}}\",\r\n  \"active\": true,\r\n  \"school\": \"646cbb07acf2ee0d37c6d984\",\r\n  \"sections\": [],\r\n  \"constants\": [\r\n    {\r\n      \"key\": \"11\",\r\n      \"value\": \"11\",\r\n      \"index\": 1\r\n    },\r\n    {\r\n      \"key\": \"22\",\r\n      \"value\": \"22\",\r\n      \"index\": 2\r\n    },\r\n    {\r\n      \"key\": \"33\",\r\n      \"value\": \"33\",\r\n      \"index\": 3\r\n    }\r\n  ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/department",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"department"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Departments",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/department/{{dep_id}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"department",
+												"{{dep_id}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Locations",
+							"item": [
+								{
+									"name": "campus login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "SchoolStupLocationClick",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/school/646cbb07acf2ee0d37c6d984/location",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"school",
+												"646cbb07acf2ee0d37c6d984",
+												"location"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Creat SchoolLocation",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var gelenData=pm.response.json();\r",
+													"\r",
+													"pm.collectionVariables.set(\"school_id\",gelenData.id);\r",
+													"\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"shortName\": \"{{$randomLastName}}\",\r\n  \"active\": true,\r\n  \"capacity\": 1230,\r\n  \"type\": \"CLASS\",\r\n  \"school\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/location",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"location"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit SchoolLocation",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{school_id}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"shortName\": \"{{$randomLastName}}\",\r\n  \"active\": true,\r\n  \"capacity\": 1230,\r\n  \"type\": \"CLASS\",\r\n  \"school\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/location",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"location"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE SchoolLocation",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/location/{{school_id}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"location",
+												"{{school_id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "campus logout",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "https://test.mersys.io/auth/logout",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"logout"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "+Human Resources",
+			"item": [
+				{
+					"name": "Setup",
+					"item": [
+						{
+							"name": "Positions",
+							"item": [
+								{
+									"name": "campus login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Navigates to HR Positions",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "f92983fb23340feebdd78f052c074e483ce5d44daae6f1052591dfe1f3d9beb8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/employee-position/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"employee-position",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Adds a new position",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var gelenData = pm.response.json();\r",
+													"\r",
+													"pm.collectionVariables.set(\"p_id\",gelenData.id); \r",
+													"pm.collectionVariables.set(\"p_name\",gelenData.name)\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "f92983fb23340feebdd78f052c074e483ce5d44daae6f1052591dfe1f3d9beb8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"shortName\": \"{{$randomNamePrefix}}\",\r\n  \"translateName\": [],\r\n  \"tenantId\": \"646cb816433c0f46e7d44cb0\",\r\n  \"active\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/employee-position",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"employee-position"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Searches for a position",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "f92983fb23340feebdd78f052c074e483ce5d44daae6f1052591dfe1f3d9beb8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"{{p_name}}\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/employee-position/search/",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"employee-position",
+												"search",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Updates an existing position",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "f92983fb23340feebdd78f052c074e483ce5d44daae6f1052591dfe1f3d9beb8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{p_id}}\",\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"shortName\": \"{{$randomNamePrefix}}\",\r\n  \"translateName\": [],\r\n  \"tenantId\": \"646cb816433c0f46e7d44cb0\",\r\n  \"active\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/employee-position",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"employee-position"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Deletes a position",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "f92983fb23340feebdd78f052c074e483ce5d44daae6f1052591dfe1f3d9beb8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/employee-position/{{p_id}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"employee-position",
+												"{{p_id}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Attestations",
+							"item": [
+								{
+									"name": "campus login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Attestions click",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/attestation/search",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"attestation",
+												"search"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create attestions",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var gelenData = pm.response.json();\r",
+													"pm.collectionVariables.set(\"attestion_id\",gelenData.id)\r",
+													"\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/attestation",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"attestation"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit attestions",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{attestion_id}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/attestation",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"attestation"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DELETE attestions",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/attestation/{{attestion_id}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"attestation",
+												"{{attestion_id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "logout campus",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "https://test.mersys.io/auth/logout",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"logout"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Position Categories",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"turkeyts\",\r\n  \"password\": \"TechnoStudy123\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create PositionCategory",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var Data=pm.response.json();\r",
+													"pm.collectionVariables.set(\"Name\",Data.name);\r",
+													"pm.collectionVariables.set(\"ID\",Data.id);\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"translateName\": []\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/position-category",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"position-category"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update PositionCategory",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"id\": \"{{ID}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"translateName\": []\r\n\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/position-category",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"position-category"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete PositionCategory",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/position-category/{{ID}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"position-category",
+												"{{ID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "+Education",
+			"item": [
+				{
+					"name": "Setup",
+					"item": [
+						{
+							"name": "Subject Categories",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\",\r\n  \"rememberMe\": \"true\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/auth/login",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Education Subject Category",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var gelenData=pm.response.json();\r",
+													"pm.collectionVariables.set(\"edu_id\",gelenData.id);\r",
+													"pm.collectionVariables.set(\"edu_name\",gelenData.name);\r",
+													"\r",
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "\r\n{\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"code\": \"{{$randomCurrencyCode}}\",\r\n  \"translateName\": [],\r\n  \"active\": true\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/subject-categories",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"subject-categories"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Education Subject Category Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "\r\n{\r\n  \"name\": \"{{edu_name}}\",\r\n  \"code\": \"{{$randomCurrencyCode}}\",\r\n  \"translateName\": [],\r\n  \"active\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/subject-categories",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"subject-categories"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Education Subject Category",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "\r\n\r\n{\r\n  \"id\": \"{{edu_id}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"code\": \"{{$randomInt}}\",\r\n  \"translateName\": [],\r\n  \"active\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/subject-categories",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"subject-categories"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Education Subject Category",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/subject-categories/{{edu_id}}",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"subject-categories",
+												"{{edu_id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Education Subject Category Negative",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://test.mersys.io/school-service/api/subject-categories/65450bffe814a84585f1d009",
+											"protocol": "https",
+											"host": [
+												"test",
+												"mersys",
+												"io"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"subject-categories",
+												"65450bffe814a84585f1d009"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "countryName",
+			"value": ""
+		},
+		{
+			"key": "countryID",
+			"value": ""
+		},
+		{
+			"key": "idCode",
+			"value": ""
+		},
+		{
+			"key": "userName",
+			"value": ""
+		},
+		{
+			"key": "Id",
+			"value": ""
+		},
+		{
+			"key": "name",
+			"value": ""
+		},
+		{
+			"key": "schoolid",
+			"value": ""
+		},
+		{
+			"key": "discount_id",
+			"value": ""
+		},
+		{
+			"key": "school_id",
+			"value": ""
+		},
+		{
+			"key": "attestion_id",
+			"value": ""
+		},
+		{
+			"key": "Name",
+			"value": ""
+		},
+		{
+			"key": "ID",
+			"value": ""
+		},
+		{
+			"key": "id",
+			"value": ""
+		},
+		{
+			"key": "n_id",
+			"value": ""
+		},
+		{
+			"key": "p_id",
+			"value": ""
+		},
+		{
+			"key": "p_name",
+			"value": ""
+		},
+		{
+			"key": "grl_id",
+			"value": ""
+		},
+		{
+			"key": "grl_name",
+			"value": ""
+		},
+		{
+			"key": "dt_Id",
+			"value": ""
+		},
+		{
+			"key": "dt_name",
+			"value": ""
+		},
+		{
+			"key": "dt_schoolid",
+			"value": ""
+		},
+		{
+			"key": "n_name",
+			"value": ""
+		},
+		{
+			"key": "dep_id",
+			"value": ""
+		},
+		{
+			"key": "dep_name",
+			"value": ""
+		},
+		{
+			"key": "edu_id",
+			"value": ""
+		},
+		{
+			"key": "edu_name",
+			"value": ""
+		},
+		{
+			"key": "dt_id",
+			"value": ""
+		}
+	]
+}
